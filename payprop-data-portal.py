@@ -322,7 +322,7 @@ def clean_master():
 
     # Assuming master_df is your cleaned DataFrame
     st.session_state['master_df'] = master_df
-    st.write(master_df)
+
 
     # Create a BytesIO buffer to hold the Excel data
     output = BytesIO()
