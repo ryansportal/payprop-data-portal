@@ -322,7 +322,7 @@ def clean_master():
 
     # Assuming master_df is your cleaned DataFrame
     st.session_state['master_df'] = master_df
-    st.write(master_df)
+
 
     # Create a BytesIO buffer to hold the Excel data
     output = BytesIO()
@@ -2108,7 +2108,6 @@ def main():
         st.session_state['master_df'] = master_df
 
         if master_df is not None:
-            st.write("Calling clean_master()")
             clean_master()
         else:
             st.write("Master data is None")
