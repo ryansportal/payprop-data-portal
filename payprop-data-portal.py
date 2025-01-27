@@ -322,7 +322,7 @@ def clean_master():
 
     # Assuming master_df is your cleaned DataFrame
     st.session_state['master_df'] = master_df
-
+    st.write(master_df)
 
     # Create a BytesIO buffer to hold the Excel data
     output = BytesIO()
@@ -1357,6 +1357,7 @@ def build_invoices():
     )
 
     st.session_state['master_df'] = master_df
+    st.write('details added',master_df)
 
 
     frequencies = []
@@ -1413,11 +1414,6 @@ def build_invoices():
         'Invoice status':'Status'
     }
 
-    # Create an empty DataFrame with only the columns from the mapping that exist in invoices_df
-    invoices_columns = [v for v in invoices_mapping.values() if v in invoices_df.columns]
-
-    # Ensure that the DataFrame includes only the valid columns
-    invoices_df = invoices_df[invoices_columns]
 
     # Define the column types.#'Frequency': 'Select',
     column_types = {
@@ -1430,6 +1426,12 @@ def build_invoices():
         'Payment day': 'Number',
         'Direct Debit': 'Select'
     }
+
+    # Clear all rows and values but keep headers
+    invoices_df = invoices_df.iloc[0:0]
+
+
+
 
     # Apply transformations based on column types
     for col, col_type in column_types.items():
@@ -1448,10 +1450,13 @@ def build_invoices():
             elif col_type == 'Text':
                 invoices_df[col] = invoices_df[col].astype(str)
 
+
+
     # Map and copy data using the defined mapping (only for columns that exist in both)
     for master_col, invoices_col in invoices_mapping.items():
         if master_col in master_df.columns and invoices_col in invoices_df.columns:
             invoices_df[invoices_col] = master_df[master_col]
+
 
     # Drop rows where all columns are NaN (None or empty)
     invoices_df = invoices_df.dropna(how='all')
