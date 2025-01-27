@@ -1354,7 +1354,7 @@ def build_invoices():
     # Add tenant details to master_df
     master_df['tenant_details'] = master_df['Tenant(s) Name'].apply(
         lambda x: find_tenant_details(x, invoices_flat) if isinstance(x, str) else None
-
+    )
 
     frequencies = []
 
